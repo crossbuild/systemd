@@ -28,8 +28,8 @@ if [ -f .git/hooks/pre-commit.sample ] && [ ! -f .git/hooks/pre-commit ]; then
         echo "Activated pre-commit hook." || :
 fi
 
-intltoolize --force --automake
-autoreconf --force --install --symlink
+intltoolize --force --automake -c
+autoreconf --force --install
 
 libdir() {
         echo $(cd "$1/$(gcc -print-multi-os-directory)"; pwd)
