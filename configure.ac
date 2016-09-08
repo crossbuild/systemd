@@ -693,31 +693,13 @@ AM_CONDITIONAL([HAVE_SMACK], [test "x$have_smack" = "xyes"])
 AC_ARG_ENABLE([gcrypt],
         AS_HELP_STRING([--disable-gcrypt],[Disable optional GCRYPT support]),
                 [case "${enableval}" in
-                        yes) have_gcrypt=yes ;;
                         no) have_gcrypt=no ;;
                         *) AC_MSG_ERROR(bad value ${enableval} for --disable-gcrypt) ;;
                 esac],
-                [have_gcrypt=auto])
+                [have_gcrypt=no])
 
-if test "x${have_gcrypt}" != xno ; then
-        AM_PATH_LIBGCRYPT(
-                [1.4.5],
-                [have_gcrypt=yes],
-                [if test "x$have_gcrypt" = xyes ; then
-                        AC_MSG_ERROR([*** GCRYPT headers not found.])
-                fi])
-
-        if test "x$have_gcrypt" = xyes ; then
-                GCRYPT_LIBS="$LIBGCRYPT_LIBS"
-                GCRYPT_CFLAGS="$LIBGCRYPT_CFLAGS"
-                AC_DEFINE(HAVE_GCRYPT, 1, [GCRYPT available])
-        else
-                have_gcrypt=no
-        fi
-else
-        GCRYPT_LIBS=
-        GCRYPT_CFLAGS=
-fi
+GCRYPT_LIBS=
+GCRYPT_CFLAGS=
 AC_SUBST(GCRYPT_LIBS)
 AC_SUBST(GCRYPT_CFLAGS)
 AM_CONDITIONAL([HAVE_GCRYPT], [test "x$have_gcrypt" != xno])
